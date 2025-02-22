@@ -14,7 +14,10 @@ WITH src_reviews AS (
     }}
 )
 
-SELECT *
+SELECT
+  {{ dbt_utils.generate_surrogate_key(['listing_id', 'review_date', 'reviewer_name', 'review_text']) }}
+  AS review_id,
+  *
 FROM src_reviews
 WHERE review_text IS NOT NULL
 -- This is how we specfiy the incremental part to add to the table
