@@ -29,5 +29,31 @@ models:
                       'Hotel room']
 
       - name: minimum_nights
+        description: '{{ doc("dim_listing_cleansed__minimum_nights")}}'
         tests:
           - positive_value
+  - name: dim_hosts_cleansed
+    description: Cleansed table which contains Airbnb hosts.
+    columns:
+
+      - name: host_id
+        description: Unique id for host.
+        tests:
+          - not_null
+
+      - name: host_name
+        description: Name of host. If null replace with Anonymous.
+        tests:
+          - not_null
+
+      - name: is_superhost
+        description: Indicates if host is labeled as a super host.
+        tests:
+          - accepted_values:
+              values: ['t', 'f']
+
+      - name: created_at
+        description: Indicates when host join Airbnb
+      
+      - name: updated_at
+        description: Time host was last updated.
