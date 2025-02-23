@@ -27,6 +27,9 @@ models:
                       'Private room',
                       'Shared room',
                       'Hotel room']
+      - name: price
+        description: Nightly rate for the listing in dollars
+        
 
       - name: minimum_nights
         description: '{{ doc("dim_listing_cleansed__minimum_nights")}}'
