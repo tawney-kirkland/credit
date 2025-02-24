@@ -45,3 +45,6 @@ dispatch:
   - macro_namespace: dbt_utils
     search_order: ['dbtlearn', 'dbt_utils']
 
+vars:
+  user_name: "tawney-kirkland"
+
