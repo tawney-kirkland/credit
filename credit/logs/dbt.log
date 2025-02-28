@@ -1,0 +1,30 @@
+[0m17:12:37.214530 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109cd7e10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109cbc350>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109d05890>]}
+
+
+============================== 17:12:37.217786 | 9767bd1d-0ad1-458a-9921-4f0853e5a8dd ==============================
+[0m17:12:37.217786 [info ] [MainThread]: Running with dbt=1.9.2
+[0m17:12:37.218120 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'debug': 'False', 'log_path': 'logs', 'profiles_dir': '/Users/tawneykirkland/.dbt', 'fail_fast': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'None', 'log_format': 'default', 'introspect': 'True', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'target_path': 'None', 'invocation_command': 'dbt init creditproject', 'send_anonymous_usage_stats': 'True'}
+[0m17:12:37.227715 [debug] [MainThread]: Starter project path: /Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/dbt/include/starter_project
+[0m17:12:37.231246 [info ] [MainThread]: 
+Your new dbt project "creditproject" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m17:12:37.231473 [info ] [MainThread]: Setting up your profile.
+[0m17:15:56.749008 [info ] [MainThread]: Profile creditproject written to /Users/tawneykirkland/.dbt/profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m17:15:56.772491 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 199.59657, "process_in_blocks": "0", "process_kernel_time": 0.16021, "process_mem_max_rss": "113098752", "process_out_blocks": "0", "process_user_time": 0.66764}
+[0m17:15:56.773403 [debug] [MainThread]: Command `dbt init` succeeded at 17:15:56.773197 after 199.60 seconds
+[0m17:15:56.774601 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109cd6f50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1085eb650>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x102b48250>]}
+[0m17:15:56.775343 [debug] [MainThread]: Flushing usage events
+[0m17:15:56.960501 [debug] [MainThread]: An error was encountered while trying to flush usage events
