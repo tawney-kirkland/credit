@@ -42,7 +42,7 @@ models:
         tests:
           - positive_value
 
-      - name: COUNT_3059_DAYS_PAST_DUE
+      - name: count_3059_days_past_due
         description: Number of times borrower has been 30-59 days past due but no worse in the last 2 years
 
       - name: count_6089_days_past_due
