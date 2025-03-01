@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: credit
+    schema: raw
+    tables:
+      - name: client_credit
+        identifier: raw_credit
+       
