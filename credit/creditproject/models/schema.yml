@@ -2,23 +2,59 @@ version: 2
 
 models:
   - name: dim_credit_cleansed
+    description: Cleansed table containing borrower demographics, credit usage and serious_delinquency (target)
     columns:
 
       - name: unique_id
+        description: Primary key for the borrower
         tests:
           - unique
           - not_null
     
       - name: serious_delinquency
+        description: Person experienced 90 days past due delinquency or worse (target)
         tests:
           - not_null
           - accepted_values:
               values: [0, 1]
 
       - name: age
+        description: Age of borrower in years
+        tests:
+          - not_null
+          - positive_value
+
+      - name: monthly_income
+        description: Monthly income of borrower
+    
+      - name: credit_loans_count
+        description: Number of Open loans (installment like car loan or mortgage) and Lines of credit (e.g. credit cards)
         tests:
           - not_null
     
-      - name: credit_loans_count
+      - name: debt_ratio
+        description: Monthly debt payments, alimony,living costs divided by monthy gross income
         tests:
-          - not_null
+          - positive_value
+
+      - name: credit_usage_pct
+        description: Total balance on credit cards and personal lines of credit except real estate and no installment debt like car loans divided by the sum of credit limits
+        tests:
+          - positive_value
+
+      - name: COUNT_3059_DAYS_PAST_DUE
+        description: Number of times borrower has been 30-59 days past due but no worse in the last 2 years
+
+      - name: count_6089_days_past_due
+        description: Number of times borrower has been 60-89 days past due but no worse in the last 2 years
+
+      - name: count_90_days_late
+        description: Number of times borrower has been 90 days or more past due
+
+      - name: real_estate_line_loans_count
+        description: Number of mortgage and real estate loans including home equity lines of credit
+
+      - name: count_dependents
+        description: Number of dependents
+
+      
