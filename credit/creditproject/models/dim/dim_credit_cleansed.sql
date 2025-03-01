@@ -18,7 +18,7 @@ SELECT
     count_6089_days_past_due,
     CASE WHEN
         count_dependents = 'NA' THEN 0
-        ELSE count_dependents
-    END AS count_dependents,
+        ELSE count_dependents 
+    END :: NUMBER(10,0) AS count_dependents,
     unique_id
 FROM src_credit

@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: dim_credit_cleansed
+    columns:
+
+      - name: unique_id
+        tests:
+          - unique
+          - not_null
+    
+      - name: serious_delinquency
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+
+      - name: age
+        tests:
+          - not_null
+    
+      - name: credit_loans_count
+        tests:
+          - not_null
