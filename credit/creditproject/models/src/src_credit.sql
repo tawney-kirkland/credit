@@ -1,5 +1,5 @@
 WITH src_credit AS (
-    SELECT * FROM CREDIT.RAW.RAW_CREDIT
+    SELECT * FROM {{ source('credit', 'client_credit')}}
 )
 
 SELECT
@@ -13,6 +13,7 @@ SELECT
     NUMBEROFTIMES90DAYSLATE AS count_90_days_late,
     NUMBERREALESTATELOANSORLINES AS real_estate_line_loans_count,
     NUMBEROFTIME60_89DAYSPASTDUENOTWORSE AS count_6089_days_past_due,
-    NUMBEROFDEPENDENTS AS count_dependents
+    NUMBEROFDEPENDENTS AS count_dependents,
+    ROW_NUMBER() OVER(ORDER BY CURRENT_TIMESTAMP()) AS unique_id
 FROM
     src_credit

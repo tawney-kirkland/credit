@@ -19,5 +19,6 @@ SELECT
     CASE WHEN
         count_dependents = 'NA' THEN 0
         ELSE count_dependents
-    END AS count_dependents
+    END AS count_dependents,
+    unique_id
 FROM src_credit
