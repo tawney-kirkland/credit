@@ -1,0 +1,27 @@
+   SERIOUS_DELINQUENCY  CREDIT_USAGE_PCT   AGE  ...  COUNT_6089_DAYS_PAST_DUE  COUNT_DEPENDENTS  UNIQUE_ID
+0                  1.0          0.766127  45.0  ...                       0.0               2.0        1.0
+1                  0.0          0.957151  40.0  ...                       0.0               1.0        2.0
+2                  0.0          0.658180  38.0  ...                       0.0               0.0        3.0
+3                  0.0          0.233810  30.0  ...                       0.0               0.0        4.0
+4                  0.0          0.907239  49.0  ...                       0.0               0.0        5.0
+
+[5 rows x 12 columns]
+2025-03-02 15:58:21,104 - Training the model...
+y_prob shape: (25000, 2)
+2025-03-02 15:58:25,678 - AUC: 0.8269
+2025-03-02 15:58:25,719 - Classification Report:
+              precision    recall  f1-score   support
+
+         0.0       0.97      0.81      0.88     23336
+         1.0       0.20      0.69      0.32      1664
+
+    accuracy                           0.80     25000
+   macro avg       0.59      0.75      0.60     25000
+weighted avg       0.92      0.80      0.85     25000
+
+2025-03-02 15:58:25,730 - Confusion Matrix:
+[[18898  4438]
+ [  521  1143]]
+2025-03-02 15:58:47,915 - Cross-validation accuracy: 0.8023 ± 0.0033
+2025-03-02 15:58:48,948 - Retraining the model on the full dataset...
+2025-03-02 15:58:54,891 - Model saved and logged to W&B at model_artifacts/random_forest_model.pkl

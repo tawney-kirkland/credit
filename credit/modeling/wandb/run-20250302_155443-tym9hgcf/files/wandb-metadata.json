@@ -1,0 +1,44 @@
+{
+  "os":  "macOS-15.3.1-arm64-arm-64bit",
+  "python":  "CPython 3.11.11",
+  "startedAt":  "2025-03-02T20:54:43.980278Z",
+  "program":  "/Users/tawneykirkland/credit/modeling/model_training.py",
+  "codePath":  "credit/modeling/model_training.py",
+  "git":  {
+    "remote":  "https://github.com/tawney-kirkland/credit.git",
+    "commit":  "ca862069dcefa26064875e130bbdf5c01c6e0ef4"
+  },
+  "email":  "tawneykirkland@gmail.com",
+  "root":  "/Users/tawneykirkland/credit/modeling",
+  "host":  "MacBookPro",
+  "executable":  "/Users/tawneykirkland/credit/venv/bin/python",
+  "codePathLocal":  "model_training.py",
+  "cpu_count":  10,
+  "cpu_count_logical":  10,
+  "disk":  {
+    "/":  {
+      "total":  "494384795648",
+      "used":  "80392675328"
+    },
+    "/System/Volumes/Data":  {
+      "total":  "494384795648",
+      "used":  "80392675328"
+    }
+  },
+  "memory":  {
+    "total":  "17179869184"
+  },
+  "cpu":  {
+    "count":  10,
+    "countLogical":  10
+  },
+  "apple":  {
+    "name":  "Apple M1 Pro",
+    "ecpuCores":  2,
+    "pcpuCores":  8,
+    "gpuCores":  16,
+    "memoryGb":  16,
+    "swapTotalBytes":  "8589934592",
+    "ramTotalBytes":  "17179869184"
+  }
+}

@@ -1,0 +1,55 @@
+   SERIOUS_DELINQUENCY  CREDIT_USAGE_PCT  ...  COUNT_DEPENDENTS  UNIQUE_ID
+0                  1.0          0.766127  ...               2.0        1.0
+1                  0.0          0.957151  ...               1.0        2.0
+2                  0.0          0.658180  ...               0.0        3.0
+3                  0.0          0.233810  ...               0.0        4.0
+4                  0.0          0.907239  ...               0.0        5.0
+
+[5 rows x 12 columns]
+2025-03-02 15:24:28,334 - Training the model...
+2025-03-02 15:24:35,330 - AUC: 0.8251
+2025-03-02 15:24:35,371 - Classification Report:
+              precision    recall  f1-score   support
+
+         0.0       0.97      0.82      0.89     23336
+         1.0       0.21      0.67      0.32      1664
+
+    accuracy                           0.81     25000
+   macro avg       0.59      0.74      0.60     25000
+weighted avg       0.92      0.81      0.85     25000
+
+2025-03-02 15:24:35,383 - Confusion Matrix:
+[[19155  4181]
+ [  552  1112]]
+2025-03-02 15:25:12,104 - Cross-validation accuracy: 0.8307 ± 0.0512
+Traceback (most recent call last):
+  File "/Users/tawneykirkland/credit/modeling/model_training.py", line 113, in <module>
+    main()
+  File "/Users/tawneykirkland/credit/modeling/model_training.py", line 103, in main
+    model_pipeline = train_model()
+                     ^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/modeling/model_training.py", line 91, in train_model
+    wandb.sklearn.plot_roc(y_test, y_prob)
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/wandb/integration/sklearn/plot/classifier.py", line 137, in roc
+    roc_chart = wandb.plot.roc_curve(y_true, y_probas, labels, classes_to_plot)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/wandb/plot/roc_curve.py", line 124, in roc_curve
+    fpr[class_label], tpr[class_label], _ = sklearn_metrics.roc_curve(
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/sklearn/utils/_param_validation.py", line 216, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/sklearn/metrics/_ranking.py", line 1150, in roc_curve
+    fps, tps, thresholds = _binary_clf_curve(
+                           ^^^^^^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/sklearn/metrics/_ranking.py", line 820, in _binary_clf_curve
+    check_consistent_length(y_true, y_score, sample_weight)
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/sklearn/utils/validation.py", line 472, in check_consistent_length
+    lengths = [_num_samples(X) for X in arrays if X is not None]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/sklearn/utils/validation.py", line 472, in <listcomp>
+    lengths = [_num_samples(X) for X in arrays if X is not None]
+               ^^^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/sklearn/utils/validation.py", line 399, in _num_samples
+    raise TypeError(
+TypeError: Input should have at least 1 dimension i.e. satisfy `len(x.shape) > 0`, got scalar `array(0.21344447)` instead.

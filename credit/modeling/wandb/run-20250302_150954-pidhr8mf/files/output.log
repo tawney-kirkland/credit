@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/Users/tawneykirkland/credit/modeling/model_training.py", line 112, in <module>
+    main()
+  File "/Users/tawneykirkland/credit/modeling/model_training.py", line 102, in main
+    model_pipeline = train_model()
+                     ^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/modeling/model_training.py", line 49, in train_model
+    df = load_preprocessed_data()
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/modeling/model_training.py", line 29, in load_preprocessed_data
+    return pd.read_parquet(file_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/pandas/io/parquet.py", line 651, in read_parquet
+    impl = get_engine(engine)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/pandas/io/parquet.py", line 67, in get_engine
+    raise ImportError(
+ImportError: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.

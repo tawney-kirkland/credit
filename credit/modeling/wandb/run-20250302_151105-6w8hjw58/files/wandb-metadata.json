@@ -1,0 +1,16 @@
+{
+  "os":  "macOS-15.3.1-arm64-arm-64bit",
+  "python":  "CPython 3.11.11",
+  "startedAt":  "2025-03-02T20:11:05.625497Z",
+  "program":  "/Users/tawneykirkland/credit/modeling/model_training.py",
+  "codePath":  "credit/modeling/model_training.py",
+  "git":  {
+    "remote":  "https://github.com/tawney-kirkland/credit.git",
+    "commit":  "ca862069dcefa26064875e130bbdf5c01c6e0ef4"
+  },
+  "email":  "tawneykirkland@gmail.com",
+  "root":  "/Users/tawneykirkland/credit/modeling",
+  "host":  "MacBookPro",
+  "executable":  "/Users/tawneykirkland/credit/venv/bin/python",
+  "codePathLocal":  "model_training.py"
+}

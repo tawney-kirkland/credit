@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "/Users/tawneykirkland/credit/modeling/model_training.py", line 112, in <module>
+    main()
+  File "/Users/tawneykirkland/credit/modeling/model_training.py", line 102, in main
+    model_pipeline = train_model()
+                     ^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/modeling/model_training.py", line 49, in train_model
+    df = load_preprocessed_data()
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/modeling/model_training.py", line 29, in load_preprocessed_data
+    return pd.read_parquet(file_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/pandas/io/parquet.py", line 667, in read_parquet
+    return impl.read(
+           ^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/pandas/io/parquet.py", line 267, in read
+    path_or_handle, handles, filesystem = _get_path_or_handle(
+                                          ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/pandas/io/parquet.py", line 140, in _get_path_or_handle
+    handles = get_handle(
+              ^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/pandas/io/common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'preprocessed_data.parquet'

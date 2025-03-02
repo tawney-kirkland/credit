@@ -1,0 +1,48 @@
+   SERIOUS_DELINQUENCY  CREDIT_USAGE_PCT   AGE  COUNT_3059_DAYS_PAST_DUE  DEBT_RATIO  MONTHLY_INCOME  CREDIT_LOANS_COUNT  COUNT_90_DAYS_LATE  REAL_ESTATE_LINE_LOANS_COUNT  COUNT_6089_DAYS_PAST_DUE  COUNT_DEPENDENTS  UNIQUE_ID
+0                  1.0          0.766127  45.0                       2.0    0.802982          9120.0                13.0                 0.0                           6.0                       0.0               2.0        1.0
+1                  0.0          0.957151  40.0                       0.0    0.121876          2600.0                 4.0                 0.0                           0.0                       0.0               1.0        2.0
+2                  0.0          0.658180  38.0                       1.0    0.085113          3042.0                 2.0                 1.0                           0.0                       0.0               0.0        3.0
+3                  0.0          0.233810  30.0                       0.0    0.036050          3300.0                 5.0                 0.0                           0.0                       0.0               0.0        4.0
+4                  0.0          0.907239  49.0                       1.0    0.024926         63588.0                 7.0                 0.0                           1.0                       0.0               0.0        5.0
+2025-03-02 15:57:14,620 - Training the model...
+y_prob shape: (25000, 2)
+2025-03-02 15:57:19,288 - AUC: 0.8269
+2025-03-02 15:57:19,332 - Classification Report:
+              precision    recall  f1-score   support
+
+         0.0       0.97      0.81      0.88     23336
+         1.0       0.20      0.69      0.32      1664
+
+    accuracy                           0.80     25000
+   macro avg       0.59      0.75      0.60     25000
+weighted avg       0.92      0.80      0.85     25000
+
+2025-03-02 15:57:19,344 - Confusion Matrix:
+[[18898  4438]
+ [  521  1143]]
+2025-03-02 15:57:41,986 - Cross-validation accuracy: 0.8023 ± 0.0033
+Traceback (most recent call last):
+  File "/Users/tawneykirkland/credit/modeling/model_training.py", line 116, in <module>
+    main()
+  File "/Users/tawneykirkland/credit/modeling/model_training.py", line 106, in main
+    model_pipeline = train_model()
+                     ^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/modeling/model_training.py", line 93, in train_model
+    wandb.sklearn.plot_roc(y_test, np.vstack([1 - y_prob, y_prob]).T )
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/wandb/integration/sklearn/plot/classifier.py", line 137, in roc
+    roc_chart = wandb.plot.roc_curve(y_true, y_probas, labels, classes_to_plot)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/wandb/plot/roc_curve.py", line 124, in roc_curve
+    fpr[class_label], tpr[class_label], _ = sklearn_metrics.roc_curve(
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/sklearn/utils/_param_validation.py", line 216, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/sklearn/metrics/_ranking.py", line 1150, in roc_curve
+    fps, tps, thresholds = _binary_clf_curve(
+                           ^^^^^^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/sklearn/metrics/_ranking.py", line 820, in _binary_clf_curve
+    check_consistent_length(y_true, y_score, sample_weight)
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/sklearn/utils/validation.py", line 475, in check_consistent_length
+    raise ValueError(
+ValueError: Found input variables with inconsistent numbers of samples: [25000, 2]

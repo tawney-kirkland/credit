@@ -1,0 +1,15 @@
+{"time":"2025-03-02T15:09:54.161521-05:00","level":"INFO","msg":"stream: starting","core version":"0.19.7","symlink path":"/Users/tawneykirkland/credit/modeling/wandb/run-20250302_150954-pidhr8mf/logs/debug-core.log"}
+{"time":"2025-03-02T15:09:54.472354-05:00","level":"INFO","msg":"created new stream","id":"pidhr8mf"}
+{"time":"2025-03-02T15:09:54.472427-05:00","level":"INFO","msg":"stream: started","id":"pidhr8mf"}
+{"time":"2025-03-02T15:09:54.472495-05:00","level":"INFO","msg":"handler: started","stream_id":"pidhr8mf"}
+{"time":"2025-03-02T15:09:54.472591-05:00","level":"INFO","msg":"sender: started","stream_id":"pidhr8mf"}
+{"time":"2025-03-02T15:09:54.47265-05:00","level":"INFO","msg":"writer: Do: started","stream_id":"pidhr8mf"}
+{"time":"2025-03-02T15:09:54.798644-05:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-02T15:09:54.871221-05:00","level":"INFO","msg":"stream: closing","id":"pidhr8mf"}
+{"time":"2025-03-02T15:09:54.871264-05:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-02T15:09:54.871654-05:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-02T15:09:55.353287-05:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-02T15:09:55.503328-05:00","level":"INFO","msg":"handler: closed","stream_id":"pidhr8mf"}
+{"time":"2025-03-02T15:09:55.503304-05:00","level":"INFO","msg":"writer: Close: closed","stream_id":"pidhr8mf"}
+{"time":"2025-03-02T15:09:55.503856-05:00","level":"INFO","msg":"sender: closed","stream_id":"pidhr8mf"}
+{"time":"2025-03-02T15:09:55.504315-05:00","level":"INFO","msg":"stream: closed","id":"pidhr8mf"}

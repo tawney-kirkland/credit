@@ -1,0 +1,40 @@
+   SERIOUS_DELINQUENCY  CREDIT_USAGE_PCT  ...  COUNT_DEPENDENTS  UNIQUE_ID
+0                  1.0          0.766127  ...               2.0        1.0
+1                  0.0          0.957151  ...               1.0        2.0
+2                  0.0          0.658180  ...               0.0        3.0
+3                  0.0          0.233810  ...               0.0        4.0
+4                  0.0          0.907239  ...               0.0        5.0
+
+[5 rows x 12 columns]
+2025-03-02 15:31:17,062 - Training the model...
+y_prob shape: (25000,)
+2025-03-02 15:31:24,199 - AUC: 0.8251
+2025-03-02 15:31:24,240 - Classification Report:
+              precision    recall  f1-score   support
+
+         0.0       0.97      0.82      0.89     23336
+         1.0       0.21      0.67      0.32      1664
+
+    accuracy                           0.81     25000
+   macro avg       0.59      0.74      0.60     25000
+weighted avg       0.92      0.81      0.85     25000
+
+2025-03-02 15:31:24,252 - Confusion Matrix:
+[[19155  4181]
+ [  552  1112]]
+2025-03-02 15:32:00,850 - Cross-validation accuracy: 0.8307 ± 0.0512
+Traceback (most recent call last):
+  File "/Users/tawneykirkland/credit/modeling/model_training.py", line 113, in <module>
+    main()
+  File "/Users/tawneykirkland/credit/modeling/model_training.py", line 103, in main
+    model_pipeline = train_model()
+                     ^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/modeling/model_training.py", line 92, in train_model
+    wandb.sklearn.plot_precision_recall(y_test, y_prob)
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/wandb/integration/sklearn/plot/classifier.py", line 214, in precision_recall
+    precision_recall_chart = wandb.plot.pr_curve(
+                             ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tawneykirkland/credit/venv/lib/python3.11/site-packages/wandb/plot/pr_curve.py", line 139, in pr_curve
+    y_true, y_probas[:, i], pos_label=classes[i]
+            ~~~~~~~~^^^^^^
+IndexError: too many indices for array: array is 1-dimensional, but 2 were indexed
