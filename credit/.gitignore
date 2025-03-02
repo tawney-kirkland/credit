@@ -1,0 +1,7 @@
+# .gitignore
+.env
+*.pkl
+*.joblib
+model_artifacts/
+datasets/
+wandb/
