@@ -1,9 +1,10 @@
 import pandas as pd
+import numpy as np
 import joblib
 import wandb
 import snowflake.connector
 import json
-from sklearn.metrics import classification_report, roc_auc_score
+from sklearn.metrics import classification_report, roc_auc_score, confusion_matrix
 import os
 import logging
 
@@ -39,19 +40,22 @@ def get_last_processed_id(file_path="last_processed_id.json"):
 def update_last_processed_id(file_path="last_processed_id.json",new_last_processed_id=0):
     try:
         logger.info(f"Attempting to write to {file_path}")
+
+        # Convert to python int before writing to JSON
+        new_last_processed_id = int(new_last_processed_id)
         
         # Open the file and write the new last processed ID
-        with open("last_processed_id.json", "w") as file:
+        with open(file_path, "w") as file:
             # Create the data to be written
             data = {"last_processed_id": new_last_processed_id}
             json.dump(data, file)
-            logger.info("Successfully updated the last_processed_id.")
+            logger.info(f"Successfully updated last_processed_id to {new_last_processed_id}.")
             
     except OSError as e:
         logger.error(f"Error updating last_processed_id: {e}")
         raise  # Re-raise the error to halt execution or handle it further
 
-# Function to fetch new data from Snowflake (replace with actual Snowflake connection logic)
+# Fetch new data from Snowflake
 def fetch_new_data(last_processed_id, limit=2000):
     conn = snowflake.connector.connect(
         user=os.getenv("SF_USER"),
@@ -68,13 +72,11 @@ def fetch_new_data(last_processed_id, limit=2000):
     WHERE UNIQUE_ID > {last_processed_id}
     LIMIT {limit}
     """
-    # Assuming you have a function to execute the query and return data as DataFrame
-    return pd.read_sql(query, conn)  # Replace with actual Snowflake connection logic
+   
+    return pd.read_sql(query, conn)
 
 # Function to evaluate the model on new data
 def test_new_data(model, new_data):
-    # Fetch the new data
-    # new_data = fetch_new_data(last_processed_id)
 
     # Split data into features and target
     X_test = new_data.drop(['SERIOUS_DELINQUENCY', 'COUNT_6089_DAYS_PAST_DUE', 'COUNT_3059_DAYS_PAST_DUE','UNIQUE_ID'], axis=1)
@@ -82,18 +84,20 @@ def test_new_data(model, new_data):
 
     # Get predictions and probabilities
     y_pred = model.predict(X_test)
-    y_prob = model.predict_proba(X_test)[:, 1]  # Get probabilities for class 1
+    y_prob = model.predict_proba(X_test)
 
     # Evaluate model performance
-    auc = roc_auc_score(y_test, y_prob)
+    auc = roc_auc_score(y_test, y_prob[:, 1])
     print(f"AUC: {auc:.4f}")
     print("Classification Report:\n", classification_report(y_test, y_pred))
+    print("Confusion Matrix:\n%s", confusion_matrix(y_test, y_pred))
 
     # Log the results to W&B
     wandb.log({"AUC": auc, "classification_report": classification_report(y_test, y_pred)})
+    wandb.sklearn.plot_confusion_matrix(y_test, y_pred)
+    wandb.sklearn.plot_roc(y_test, np.vstack([1 - y_prob[:, 1], y_prob[:, 1]]).T )
+    wandb.sklearn.plot_precision_recall(y_test, y_prob)
 
-
-# Main function to run the testing pipeline
 def main():
     # Initialize W&B
     wandb.init(project="credit-risk-model", job_type="model_testing")
@@ -111,8 +115,8 @@ def main():
     # Get the max ID from the new data and update last_processed_id
     new_last_processed_id = new_data['UNIQUE_ID'].max()  
     logger.info(f"New last_processed_id: {new_last_processed_id}")
-    update_last_processed_id(new_last_processed_id)
-    
+    update_last_processed_id("last_processed_id.json", new_last_processed_id)
+
 # Run the pipeline
 if __name__ == '__main__':
     main()
