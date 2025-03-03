@@ -1,6 +1,7 @@
 # .gitignore
 .env
 *.pkl
+*.csv
 *.joblib
 model_artifacts/
 datasets/
