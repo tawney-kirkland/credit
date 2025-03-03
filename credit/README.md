@@ -13,6 +13,7 @@ The goal of this project is to predict the likelihood of financial distress for 
 2. Modeling
 - The model training begins with a Random Forest baseline, as seen in `model_training.py`. The model is trained and validated, and its performance is monitored throughout the process.
 - Models and runs are logged in Weights and Biases to monitor ongoing model performance.
+- Given that the dataset is highly imbalanced, where only 7% of observations are delinquent, the decision was made to prioritize **recall** over **precision** to avoid false negatives. This is critical because **false negatives** in financial distress prediction could lead to significant missed recovery opportunities.
 
 3. Next steps
 - The model will be improved with XGBoost and other algorithms.
