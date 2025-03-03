@@ -10,7 +10,6 @@ import logging
 import numpy as np
 from dotenv import load_dotenv
 
-# Load the .env file
 load_dotenv()
 
 # Initialize Wandb
@@ -49,7 +48,7 @@ def save_and_log_datasets(train_df, test_df, y_probas, run):
 def train_model():
     df = load_preprocessed_data()
     print(df.head())
-    X = df.drop(['SERIOUS_DELINQUENCY', 'COUNT_6089_DAYS_PAST_DUE', 'COUNT_3059_DAYS_PAST_DUE','UNIQUE_ID'], axis=1)
+    X = df.drop(['SERIOUS_DELINQUENCY', 'UNIQUE_ID'], axis=1)
     y = df['SERIOUS_DELINQUENCY']
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=wandb.config.test_size, random_state=wandb.config.random_state)
@@ -101,8 +100,9 @@ def train_model():
 
     return model_pipeline
 
-# Main function to orchestrate data extraction, preprocessing, and saving
+
 def main():
+
     model_pipeline = train_model()
 
     # Save the model and log it to W&B
