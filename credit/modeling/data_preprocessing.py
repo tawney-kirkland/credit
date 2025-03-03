@@ -32,6 +32,10 @@ def get_snowflake_data():
 # Function for preprocessing
 # Currently limited to imputing missing values
 def preprocess_data(df):
+
+    # Drop strongly correlated attributes
+    df = df.drop(['COUNT_6089_DAYS_PAST_DUE', 'COUNT_3059_DAYS_PAST_DUE'], axis=1)
+
     # Initialize the imputer (replace missing values with the mean)
     imputer = SimpleImputer(strategy='mean')
     
