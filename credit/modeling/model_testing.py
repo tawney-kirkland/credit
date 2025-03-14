@@ -17,9 +17,10 @@ load_dotenv()
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 logger = logging.getLogger()
 
-# Function to load the pre-trained model
-def load_model(model_path="model_artifacts/random_forest_model.pkl"):
-    return joblib.load(model_path)
+# Function to load the pre-trained model and the pre-processing pipeline
+def load_model_and_preprocessor(model_path="model_artifacts/random_forest_model_feature_engineered.pkl"):
+    model_pipeline = joblib.load(model_path)
+    return model_pipeline
 
 # Function to get the last processed ID from a JSON file
 # Since we don't have a timestamp field in the table
@@ -75,22 +76,54 @@ def fetch_new_data(last_processed_id, limit=2000):
    
     return pd.read_sql(query, conn)
 
+# Feature engineering (optional)
+def feature_engineering(df, cap_values=True):
+
+    # Ensure the columns involved are numeric (if they are not, coerce them)
+    df['DEBT_RATIO'] = pd.to_numeric(df['DEBT_RATIO'], errors='coerce')
+    df['COUNT_90_DAYS_LATE'] = pd.to_numeric(df['COUNT_90_DAYS_LATE'], errors='coerce')
+    df['CREDIT_USAGE_PCT'] = pd.to_numeric(df['CREDIT_USAGE_PCT'], errors='coerce')
+    df['AGE'] = pd.to_numeric(df['AGE'], errors='coerce')
+
+    if cap_values:
+        df['DEBT_RATIO'] = np.where(df['DEBT_RATIO'] > 10, 10, df['DEBT_RATIO'])
+        df['COUNT_90_DAYS_LATE'] = np.where(df['COUNT_90_DAYS_LATE'] > 20,
+                                                  df['COUNT_90_DAYS_LATE'].mean(), df['COUNT_90_DAYS_LATE'])
+        df['CREDIT_USAGE_PCT'] = np.where(df['CREDIT_USAGE_PCT'] > 2,
+                                                               2, df['CREDIT_USAGE_PCT'])
+        df['AGE'] = np.where(df['AGE'] > 85, 85, df['AGE'])
+
+    # Create the 'group_90days_late' feature
+    df['group_90days_late'] = np.where(df['COUNT_90_DAYS_LATE'] == 0, '0', 
+                                       np.where((df['COUNT_90_DAYS_LATE'] >= 1) & 
+                                                (df['COUNT_90_DAYS_LATE'] <= 4), '1-4', '5+'))
+    df['credit_usage_age'] = df['AGE'] * df['CREDIT_USAGE_PCT']
+    df.drop(columns=['COUNT_90_DAYS_LATE'], inplace=True)
+
+    return df
+
 # Function to evaluate the model on new data
-def test_new_data(model, new_data):
+def test_new_data(model_pipeline, new_data):
 
-    # Split data into features and target
-    X_test = new_data.drop(['SERIOUS_DELINQUENCY', 'COUNT_6089_DAYS_PAST_DUE', 'COUNT_3059_DAYS_PAST_DUE','UNIQUE_ID'], axis=1)
+    # Apply the feature engineering to the new data
+    new_data = feature_engineering(new_data)
+    
+    # Extract target variable for the new data
     y_test = new_data['SERIOUS_DELINQUENCY']
-
-    # Get predictions and probabilities
-    y_pred = model.predict(X_test)
-    y_prob = model.predict_proba(X_test)
+    X_test = new_data.drop(['SERIOUS_DELINQUENCY', 'UNIQUE_ID','COUNT_6089_DAYS_PAST_DUE','COUNT_3059_DAYS_PAST_DUE'], axis=1)
+    print(X_test.columns)
+    # Apply the same preprocessing (e.g., imputation, scaling) to the new data
+    new_data_processed = model_pipeline.named_steps['preprocessor'].transform(X_test)
+    
+    # Get predictions and probabilities from the model
+    y_pred = model_pipeline.predict(new_data_processed)
+    y_prob = model_pipeline.predict_proba(new_data_processed)
 
     # Evaluate model performance
     auc = roc_auc_score(y_test, y_prob[:, 1])
-    print(f"AUC: {auc:.4f}")
-    print("Classification Report:\n", classification_report(y_test, y_pred))
-    print("Confusion Matrix:\n%s", confusion_matrix(y_test, y_pred))
+    logger.info(f"AUC: {auc:.4f}")
+    logger.info("Classification Report:\n", classification_report(y_test, y_pred))
+    logger.info("Confusion Matrix:\n%s", confusion_matrix(y_test, y_pred))
 
     # Log the results to W&B
     wandb.log({"AUC": auc, "classification_report": classification_report(y_test, y_pred)})
@@ -100,18 +133,20 @@ def test_new_data(model, new_data):
 
 def main():
     # Initialize W&B
+    # Initialize W&B
     wandb.init(project="credit-risk-model", job_type="model_testing")
 
-    # Load the pre-trained model
-    model = load_model()
+    # Load the pre-trained model pipeline
+    model_pipeline = load_model_and_preprocessor()
 
     # Get the last processed ID
     last_processed_id = get_last_processed_id()
     new_data = fetch_new_data(last_processed_id)
-    
+    print(new_data.head(10))
     # Test the model on new data
-    test_new_data(model, new_data)
-    
+    test_new_data(model_pipeline, new_data)
+
+
     # Get the max ID from the new data and update last_processed_id
     new_last_processed_id = new_data['UNIQUE_ID'].max()  
     logger.info(f"New last_processed_id: {new_last_processed_id}")
